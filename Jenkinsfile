@@ -4,12 +4,12 @@ stage('Init') {
     checkout scm
   }
    stage('Run Performance') {
-   sh "docker exec -i performance_master.2.qc2za8u2j4mib1mrszsw562a1 sh -c 'cat > /tests/0213/perf.jmx' < /home/jenkins/workspace/github/perf.jmx"
-   sh 'docker exec -i performance_master.2.qc2za8u2j4mib1mrszsw562a1 bash -c "jmeter -n -t tests/0213/perf.jmx -R 10.0.1.16 -l /tests/perf.jtl -e -o /tests/results/html/ -Jserver.rmi.ssl.disable=true"'
-   sh 'docker cp performance_master.2.qc2za8u2j4mib1mrszsw562a1:/tests/perf.jtl /home/jenkins/workspace/github/'
-   sh 'docker cp performance_master.2.qc2za8u2j4mib1mrszsw562a1:/tests/results/html /home/jenkins/workspace/github/html/'
-   sh 'docker exec -i performance_master.2.qc2za8u2j4mib1mrszsw562a1 bash -c "rm -rf tests/results/html"'
-   sh 'docker exec -i performance_master.2.qc2za8u2j4mib1mrszsw562a1 bash -c "rm -rf tests/perf.jtl"'
+   sh "docker exec -i performance_master.2.qc2za8u2j4mib1mrszsw562a2 sh -c 'cat > /tests/0213/perf.jmx' < /home/jenkins/workspace/github/perf.jmx"
+   sh 'docker exec -i performance_master.2.qc2za8u2j4mib1mrszsw562a2 bash -c "jmeter -n -t tests/0213/perf.jmx -R 10.0.1.16 -l /tests/perf.jtl -e -o /tests/results/html/ -Jserver.rmi.ssl.disable=true"'
+   sh 'docker cp performance_master.2.qc2za8u2j4mib1mrszsw562a2:/tests/perf.jtl /home/jenkins/workspace/github/'
+   sh 'docker cp performance_master.2.qc2za8u2j4mib1mrszsw562a2:/tests/results/html /home/jenkins/workspace/github/html/'
+   sh 'docker exec -i performance_master.2.qc2za8u2j4mib1mrszsw562a2 bash -c "rm -rf tests/results/html"'
+   sh 'docker exec -i performance_master.2.qc2za8u2j4mib1mrszsw562a2 bash -c "rm -rf tests/perf.jtl"'
    perfReport modePerformancePerTestCase: true, modeThroughput: true, sourceDataFiles: '**/perf.jtl'
    publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: false, reportDir: 'html', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: ''])
    sh 'rm -rf /home/jenkins/workspace/github/html' 
